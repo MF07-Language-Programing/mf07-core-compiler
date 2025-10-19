@@ -215,8 +215,9 @@ class SegmentTest {
 
 async intent main() {
 	var segment = new SegmentTest(null, null)
+	print("Object={type(segment)}")
 	try {
-		segment.run()
+		# segment.run()
 		return 0
 	} catch (ex) {
 		return -1
