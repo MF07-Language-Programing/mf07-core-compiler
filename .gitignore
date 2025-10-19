@@ -1,3 +1,5 @@
+# remove Python cache files
+__pycache__/
 .idea/
 .pytest_cache/
 .vscode/
@@ -5,16 +7,19 @@ docs/
 corp-lang-vscode/
 **/node_modules/
 
+# Remove pattern files
 */*.bat
 *.bat
 
 
 
+# Remove old files
 ./run_py.bat
 ./update_corplang_v2.7.0.bat
 ./update_corplang_v2.7.0.bat
 ./mf.cmd
 ./demo_logging_levels.bat
 
+# Remote editor config files
 .editorconfig
 .flake8
