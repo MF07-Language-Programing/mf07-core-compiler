@@ -3,8 +3,8 @@
     "tasks": [
         {
             "label": "Run Tests",
-            "type": "shell",
-            "command": "${workspaceFolder}/env/Scripts/python.exe -m pytest -q",
+            "type": "cmd",
+            "command": "python -m pytest -q",
             "group": "test",
             "presentation": {
                 "reveal": "always"
@@ -12,16 +12,16 @@
         },
         {
             "label": "Run CLI",
-            "type": "shell",
-            "command": "${workspaceFolder}/env/Scripts/python.exe cli.py run examples/sample_project/main.mp",
+            "type": "cmd",
+            "command": "python mf.py examples/first_project/main.mp",
             "presentation": {
                 "reveal": "always"
             }
         },
         {
             "label": "Start CorpLang LSP",
-            "type": "shell",
-            "command": "${workspaceFolder}/env/Scripts/python.exe corp-lang-vscode/client/server.py",
+            "type": "cmd",
+            "command": "python corp-lang-vscode/client/server.py",
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated"
