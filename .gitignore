@@ -10,10 +10,11 @@ corp-lang-vscode/
 
 
 
-run_py.bat
-update_corplang_v2.7.0.bat
-mf.cmd
-demo_logging_levels.bat
+./run_py.bat
+./update_corplang_v2.7.0.bat
+./update_corplang_v2.7.0.bat
+./mf.cmd
+./demo_logging_levels.bat
 
 .editorconfig
 .flake8
