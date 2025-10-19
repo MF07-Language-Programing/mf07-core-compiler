@@ -1,0 +1,16 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect x="2" y="1" width="12" height="14" rx="1" fill="#8b5cf6" stroke="#6b46c1"
+        stroke-width="0.5" />
+
+    <!-- Page fold -->
+    <polygon points="11,1 14,4 11,4" fill="#6b46c1" />
+
+    <!-- Text "CL" -->
+    <text x="8" y="11" font-family="Arial, sans-serif" font-size="6" font-weight="bold"
+        fill="white" text-anchor="middle">CL</text>
+
+    <!-- Small decorative dots -->
+    <circle cx="5" cy="6" r="0.8" fill="#fbbf24" opacity="0.8" />
+    <circle cx="11" cy="6" r="0.8" fill="#10b981" opacity="0.8" />
+</svg>

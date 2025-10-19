@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Tests",
+            "type": "shell",
+            "command": "${workspaceFolder}/env/Scripts/python.exe -m pytest -q",
+            "group": "test",
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "Run CLI",
+            "type": "shell",
+            "command": "${workspaceFolder}/env/Scripts/python.exe cli.py run examples/sample_project/main.mp",
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "Start CorpLang LSP",
+            "type": "shell",
+            "command": "${workspaceFolder}/env/Scripts/python.exe corp-lang-vscode/client/server.py",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

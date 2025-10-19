@@ -1,0 +1,334 @@
+{
+    "name": "CorpLang Theme",
+    "type": "dark",
+    "colors": {
+        "editor.background": "#1a1527",
+        "editor.foreground": "#e8e3f3",
+        "editor.lineHighlightBackground": "#2d2440",
+        "editor.selectionBackground": "#4a3969",
+        "editorCursor.foreground": "#a855f7",
+        "editorLineNumber.foreground": "#6b46c1",
+        "editorLineNumber.activeForeground": "#a855f7",
+        "sideBar.background": "#16141f",
+        "activityBar.background": "#110e19",
+        "statusBar.background": "#6366f1",
+        "panel.background": "#1a1527"
+    },
+    "tokenColors": [
+        {
+            "name": "Comment",
+            "scope": [
+                "comment"
+            ],
+            "settings": {
+                "fontStyle": "italic",
+                "foreground": "#8b5fbf"
+            }
+        },
+        {
+            "name": "CorpLang Keywords - Control",
+            "scope": [
+                "keyword.control.corplang"
+            ],
+            "settings": {
+                "foreground": "#a855f7",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Keywords - Declaration",
+            "scope": [
+                "keyword.declaration.corplang"
+            ],
+            "settings": {
+                "foreground": "#8b5cf6",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Keywords - Modifier",
+            "scope": [
+                "keyword.modifier.corplang"
+            ],
+            "settings": {
+                "foreground": "#7c3aed",
+                "fontStyle": "italic"
+            }
+        },
+        {
+            "name": "CorpLang Keywords - Corporate",
+            "scope": [
+                "keyword.corporate.corplang"
+            ],
+            "settings": {
+                "foreground": "#3b82f6",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Types - Primitive",
+            "scope": [
+                "storage.type.primitive.corplang"
+            ],
+            "settings": {
+                "foreground": "#1e40af",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Types - Collection",
+            "scope": [
+                "storage.type.collection.corplang"
+            ],
+            "settings": {
+                "foreground": "#fbbf24",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Operators",
+            "scope": [
+                "keyword.operator.arithmetic.corplang",
+                "keyword.operator.comparison.corplang",
+                "keyword.operator.logical.corplang",
+                "keyword.operator.assignment.corplang"
+            ],
+            "settings": {
+                "foreground": "#c084fc",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Functions - Declaration",
+            "scope": [
+                "entity.name.intent.declaration.corplang",
+                "entity.name.intent.async.declaration.corplang"
+            ],
+            "settings": {
+                "foreground": "#06b6d4",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Methods - Common",
+            "scope": [
+                "entity.name.intent.method.common.corplang"
+            ],
+            "settings": {
+                "foreground": "#0891b2",
+                "fontStyle": "italic bold"
+            }
+        },
+        {
+            "name": "CorpLang Methods - Access",
+            "scope": [
+                "entity.name.intent.method.access.corplang"
+            ],
+            "settings": {
+                "foreground": "#0e7490",
+                "fontStyle": "italic"
+            }
+        },
+        {
+            "name": "CorpLang Methods - Static",
+            "scope": [
+                "entity.name.intent.method.static.corplang"
+            ],
+            "settings": {
+                "foreground": "#22d3ee",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Properties",
+            "scope": [
+                "support.intent.property.corplang"
+            ],
+            "settings": {
+                "foreground": "#67e8f9",
+                "fontStyle": "italic"
+            }
+        },
+        {
+            "name": "CorpLang Built-in Functions",
+            "scope": [
+                "support.intent.builtin.corplang"
+            ],
+            "settings": {
+                "foreground": "#0891b2",
+                "fontStyle": "italic"
+            }
+        },
+        {
+            "name": "CorpLang Math Functions",
+            "scope": [
+                "support.intent.math.corplang"
+            ],
+            "settings": {
+                "foreground": "#059669",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Function Calls",
+            "scope": [
+                "support.intent.call.corplang"
+            ],
+            "settings": {
+                "foreground": "#0d9488",
+                "fontStyle": "normal"
+            }
+        },
+        {
+            "name": "CorpLang Classes - Declaration",
+            "scope": [
+                "entity.name.type.class.declaration.corplang",
+                "entity.name.type.interface.declaration.corplang"
+            ],
+            "settings": {
+                "foreground": "#f59e0b",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Classes - Custom",
+            "scope": [
+                "entity.name.type.class.custom.corplang"
+            ],
+            "settings": {
+                "foreground": "#fbbf24",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Classes - Instantiation",
+            "scope": [
+                "entity.name.type.class.instantiation.corplang"
+            ],
+            "settings": {
+                "foreground": "#f97316",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Inheritance",
+            "scope": [
+                "entity.other.inherited-class.corplang",
+                "entity.other.implemented-interface.corplang"
+            ],
+            "settings": {
+                "foreground": "#d97706",
+                "fontStyle": "italic"
+            }
+        },
+        {
+            "name": "CorpLang Constants",
+            "scope": [
+                "constant.language.boolean.true.corplang",
+                "constant.language.boolean.false.corplang",
+                "constant.language.null.corplang"
+            ],
+            "settings": {
+                "foreground": "#dc2626",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Strings",
+            "scope": [
+                "string.quoted.double.corplang",
+                "string.quoted.single.corplang"
+            ],
+            "settings": {
+                "foreground": "#10b981"
+            }
+        },
+        {
+            "name": "CorpLang Numbers",
+            "scope": [
+                "constant.numeric.integer.corplang",
+                "constant.numeric.float.corplang"
+            ],
+            "settings": {
+                "foreground": "#f97316"
+            }
+        },
+        {
+            "name": "CorpLang Punctuation",
+            "scope": [
+                "punctuation.definition.parameters.begin.corplang",
+                "punctuation.definition.parameters.end.corplang",
+                "punctuation.definition.block.begin.corplang",
+                "punctuation.definition.block.end.corplang",
+                "punctuation.definition.array.begin.corplang",
+                "punctuation.definition.array.end.corplang",
+                "punctuation.separator.comma.corplang",
+                "punctuation.terminator.statement.corplang",
+                "punctuation.accessor.dot.corplang",
+                "punctuation.separator.colon.corplang"
+            ],
+            "settings": {
+                "foreground": "#d1d5db"
+            }
+        },
+        {
+            "name": "CorpLang Generics - Parameters",
+            "scope": [
+                "storage.type.generic.parameter.corplang"
+            ],
+            "settings": {
+                "foreground": "#eab308",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Generics - Custom Types",
+            "scope": [
+                "entity.name.type.generic.custom.corplang"
+            ],
+            "settings": {
+                "foreground": "#ca8a04",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "CorpLang Generics - Punctuation",
+            "scope": [
+                "punctuation.separator.comma.generic.corplang"
+            ],
+            "settings": {
+                "foreground": "#facc15"
+            }
+        },
+        {
+            "name": "CorpLang Variables",
+            "scope": [
+                "variable.other.corplang"
+            ],
+            "settings": {
+                "foreground": "#e5e7eb"
+            }
+        },
+        {
+            "name": "CorpLang This/Super",
+            "scope": [
+                "keyword.other.this.corplang",
+                "keyword.other.super.corplang"
+            ],
+            "settings": {
+                "foreground": "#ef4444",
+                "fontStyle": "italic bold"
+            }
+        },
+        {
+            "name": "CorpLang New Keyword",
+            "scope": [
+                "keyword.operator.new.corplang"
+            ],
+            "settings": {
+                "foreground": "#84cc16",
+                "fontStyle": "bold"
+            }
+        }
+    ]
+}

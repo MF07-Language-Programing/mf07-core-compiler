@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle with gradient -->
+    <defs>
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <circle cx="64" cy="64" r="60" fill="url(#bgGradient)" stroke="#1e1b4b" stroke-width="3" />
+
+    <!-- CorpLang "CL" text -->
+    <text x="64" y="80" font-family="Arial, sans-serif" font-size="48" font-weight="bold"
+        fill="white" text-anchor="middle" stroke="#1e1b4b" stroke-width="1">CL</text>
+
+    <!-- Decorative elements -->
+    <circle cx="30" cy="30" r="4" fill="#fbbf24" opacity="0.8" />
+    <circle cx="98" cy="30" r="3" fill="#10b981" opacity="0.8" />
+    <circle cx="30" cy="98" r="3" fill="#06b6d4" opacity="0.8" />
+    <circle cx="98" cy="98" r="4" fill="#f59e0b" opacity="0.8" />
+
+    <!-- Small code-like elements -->
+    <rect x="20" y="50" width="15" height="2" fill="#e5e7eb" opacity="0.6" rx="1" />
+    <rect x="20" y="55" width="10" height="2" fill="#e5e7eb" opacity="0.6" rx="1" />
+    <rect x="93" y="68" width="15" height="2" fill="#e5e7eb" opacity="0.6" rx="1" />
+    <rect x="98" y="73" width="10" height="2" fill="#e5e7eb" opacity="0.6" rx="1" />
+</svg>

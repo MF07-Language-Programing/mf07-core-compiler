@@ -1,0 +1,40 @@
+# Language customization file for CorpLang
+# Use this file to add keywords, builtins, dataset/model adapters, and
+# to tweak parsing/interpreter behavior without changing core source.
+
+keywords:
+  - async
+  - await
+  - intent
+  - var
+  - import
+  - dataset
+  - model
+
+builtins:
+  - print
+  - len
+  - type
+  - parseJson
+  - stringifyJson
+
+import:
+  # Project-level import roots to search for modules (paths relative to repo root)
+  roots:
+    - examples
+    - src
+
+# Model/dataset adapter configuration (for simulated execution)
+simulator:
+  dataset_default_rows: 3
+  model_default_accuracy: 0.85
+
+# Linting / type checking options
+type_checker:
+  enabled: true
+  strict: false
+
+# Development helpers
+dev:
+  enable_repl: true
+  verbose_errors: true

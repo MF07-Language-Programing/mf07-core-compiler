@@ -1,0 +1,324 @@
+{
+    "scopeName": "source.corplang",
+    "name": "CorpLang",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#types"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#functions"
+        },
+        {
+            "include": "#methods"
+        },
+        {
+            "include": "#classes"
+        },
+        {
+            "include": "#generics"
+        },
+        {
+            "include": "#constants"
+        },
+        {
+            "include": "#punctuation"
+        },
+        {
+            "include": "#identifiers"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.hash.corplang",
+                    "match": "#.*$"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.corplang",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.corplang",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.corplang",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.corplang",
+                            "match": "\\\\."
+                        }
+                    ]
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.float.corplang",
+                    "match": "\\b\\d+\\.\\d+([eE][+-]?\\d+)?\\b"
+                },
+                {
+                    "name": "constant.numeric.integer.corplang",
+                    "match": "\\b\\d+\\b"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.corplang",
+                    "match": "\\b(if|else|while|for|in|of|return|break|continue|await|async)\\b"
+                },
+                {
+                    "name": "keyword.declaration.corplang",
+                    "match": "\\b(var|intent|fn|class|interface|import)\\b"
+                },
+                {
+                    "name": "keyword.modifier.corplang",
+                    "match": "\\b(static|private|public|abstract|extends|implements)\\b"
+                },
+                {
+                    "name": "keyword.operator.new.corplang",
+                    "match": "\\bnew\\b"
+                },
+                {
+                    "name": "keyword.other.this.corplang",
+                    "match": "\\bthis\\b"
+                },
+                {
+                    "name": "keyword.other.super.corplang",
+                    "match": "\\bsuper\\b"
+                },
+                {
+                    "name": "keyword.corporate.corplang",
+                    "match": "\\b(dataset|model|predict|train|analyze)\\b"
+                }
+            ]
+        },
+        "types": {
+            "patterns": [
+                {
+                    "name": "storage.type.primitive.corplang",
+                    "match": "\\b(int|float|bool|str|string|json|any|dict|void)\\b"
+                },
+                {
+                    "name": "storage.type.collection.corplang",
+                    "match": "\\b(List|Map|HashMap|Set|Array|Object)\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.arithmetic.corplang",
+                    "match": "\\+|\\-|\\*|\\/|%"
+                },
+                {
+                    "name": "keyword.operator.comparison.corplang",
+                    "match": "==|!=|<=|>=|<|>"
+                },
+                {
+                    "name": "keyword.operator.logical.corplang",
+                    "match": "&&|\\|\\||!"
+                },
+                {
+                    "name": "keyword.operator.assignment.corplang",
+                    "match": "="
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "entity.name.intent.declaration.corplang",
+                    "match": "\\b(?<=intent\\s)[a-zA-Z_][a-zA-Z0-9_]*"
+                },
+                {
+                    "name": "entity.name.intent.async.declaration.corplang",
+                    "match": "\\b(?<=async\\s+intent\\s)[a-zA-Z_][a-zA-Z0-9_]*"
+                },
+                {
+                    "name": "entity.name.intent.method.call.corplang",
+                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+                },
+                {
+                    "name": "entity.name.intent.method.access.corplang",
+                    "match": "(?<=\\.)\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+                },
+                {
+                    "name": "support.intent.builtin.corplang",
+                    "match": "\\b(print|sout|type|len|parseJson|stringifyJson|waitSeconds|main)\\b"
+                },
+                {
+                    "name": "support.intent.math.corplang",
+                    "match": "\\b(Math\\.[a-zA-Z_][a-zA-Z0-9_]*|mod|fibonacci|factorial|gcd|lcm)\\b"
+                },
+                {
+                    "name": "support.intent.call.corplang",
+                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+                }
+            ]
+        },
+        "classes": {
+            "patterns": [
+                {
+                    "name": "entity.name.type.class.declaration.corplang",
+                    "match": "\\b(?<=class\\s)[A-Z][a-zA-Z0-9_]*"
+                },
+                {
+                    "name": "entity.name.type.interface.declaration.corplang",
+                    "match": "\\b(?<=interface\\s)[A-Z][a-zA-Z0-9_]*"
+                },
+                {
+                    "name": "entity.name.type.class.custom.corplang",
+                    "match": "\\b(Requests|RequestOptions|Employee|Developer|Product|User|Client|Server|Database|Model|Dataset)\\b"
+                },
+                {
+                    "name": "entity.name.type.class.instantiation.corplang",
+                    "match": "\\b(?<=new\\s)[A-Z][a-zA-Z0-9_]*"
+                },
+                {
+                    "name": "entity.other.inherited-class.corplang",
+                    "match": "\\b(?<=extends\\s)[A-Z][a-zA-Z0-9_]*"
+                },
+                {
+                    "name": "entity.other.implemented-interface.corplang",
+                    "match": "\\b(?<=implements\\s)[A-Z][a-zA-Z0-9_]*"
+                }
+            ]
+        },
+        "generics": {
+            "patterns": [
+                {
+                    "name": "meta.generic.corplang",
+                    "begin": "<",
+                    "end": ">",
+                    "patterns": [
+                        {
+                            "name": "storage.type.generic.parameter.corplang",
+                            "match": "\\b(string|int|float|bool|any|dict)\\b"
+                        },
+                        {
+                            "name": "entity.name.type.generic.custom.corplang",
+                            "match": "\\b[A-Z][a-zA-Z0-9_]*\\b"
+                        },
+                        {
+                            "name": "punctuation.separator.comma.generic.corplang",
+                            "match": ","
+                        }
+                    ]
+                }
+            ]
+        },
+        "methods": {
+            "patterns": [
+                {
+                    "name": "entity.name.intent.method.common.corplang",
+                    "match": "\\b(put|get|add|append|remove|size|length|isEmpty|toString|execute|load|save|connect|disconnect|query|insert|update|delete)(?=\\s*\\()"
+                },
+                {
+                    "name": "entity.name.intent.method.static.corplang",
+                    "match": "\\b(default|create|from|of)(?=\\s*\\()"
+                },
+                {
+                    "name": "support.intent.property.corplang",
+                    "match": "(?<=\\.)\\b[a-zA-Z_][a-zA-Z0-9_]*(?!\\s*\\()"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    "name": "constant.language.boolean.true.corplang",
+                    "match": "\\btrue\\b"
+                },
+                {
+                    "name": "constant.language.boolean.false.corplang",
+                    "match": "\\bfalse\\b"
+                },
+                {
+                    "name": "constant.language.null.corplang",
+                    "match": "\\bnull\\b"
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "name": "punctuation.definition.parameters.begin.corplang",
+                    "match": "\\("
+                },
+                {
+                    "name": "punctuation.definition.parameters.end.corplang",
+                    "match": "\\)"
+                },
+                {
+                    "name": "punctuation.definition.block.begin.corplang",
+                    "match": "\\{"
+                },
+                {
+                    "name": "punctuation.definition.block.end.corplang",
+                    "match": "\\}"
+                },
+                {
+                    "name": "punctuation.definition.array.begin.corplang",
+                    "match": "\\["
+                },
+                {
+                    "name": "punctuation.definition.array.end.corplang",
+                    "match": "\\]"
+                },
+                {
+                    "name": "punctuation.separator.comma.corplang",
+                    "match": ","
+                },
+                {
+                    "name": "punctuation.terminator.statement.corplang",
+                    "match": ";"
+                },
+                {
+                    "name": "punctuation.accessor.dot.corplang",
+                    "match": "\\."
+                },
+                {
+                    "name": "punctuation.separator.colon.corplang",
+                    "match": ":"
+                }
+            ]
+        },
+        "identifiers": {
+            "patterns": [
+                {
+                    "name": "variable.other.corplang",
+                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+                }
+            ]
+        }
+    }
+}

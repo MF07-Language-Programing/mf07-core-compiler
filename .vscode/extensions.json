@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker",
+        "mf07.corp-lang"
+    ]
+}

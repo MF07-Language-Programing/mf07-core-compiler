@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run main.mp",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/cli.py",
+            "args": [
+                "run",
+                "examples/sample_project/main.mp"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}

@@ -1,0 +1,208 @@
+{
+    "Async Function": {
+        "prefix": "asyncfn",
+        "body": [
+            "async intent ${1:funcName}(${2:params}) : ${3:returnType} {",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria uma função async"
+    },
+    "Function": {
+        "prefix": "fn",
+        "body": [
+            "intent ${1:funcName}(${2:params}) : ${3:returnType} {",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria uma função"
+    },
+    "Variable Declaration": {
+        "prefix": "var",
+        "body": [
+            "var ${1:variableName}: ${2:type} = ${3:value}"
+        ],
+        "description": "Declara uma variável tipada"
+    },
+    "Class Declaration": {
+        "prefix": "class",
+        "body": [
+            "class ${1:ClassName} {",
+            "    intent constructor(${2:params}) {",
+            "        $0",
+            "    }",
+            "}"
+        ],
+        "description": "Cria uma classe"
+    },
+    "Interface Declaration": {
+        "prefix": "interface",
+        "body": [
+            "interface ${1:InterfaceName} {",
+            "    intent ${2:methodName}(${3:params}): ${4:returnType}",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria uma interface"
+    },
+    "Class with Inheritance": {
+        "prefix": "classext",
+        "body": [
+            "class ${1:ChildClass} extends ${2:ParentClass} {",
+            "    intent constructor(${3:params}) {",
+            "        super(${4:superParams})",
+            "        $0",
+            "    }",
+            "}"
+        ],
+        "description": "Cria uma classe com herança"
+    },
+    "Class with Interface": {
+        "prefix": "classimp",
+        "body": [
+            "class ${1:ClassName} implements ${2:InterfaceName} {",
+            "    intent constructor(${3:params}) {",
+            "        $0",
+            "    }",
+            "}"
+        ],
+        "description": "Cria uma classe que implementa uma interface"
+    },
+    "For Loop": {
+        "prefix": "for",
+        "body": [
+            "for (var ${1:i}: int = 0; ${1:i} < ${2:length}; ${1:i} = ${1:i} + 1) {",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria um loop for tradicional"
+    },
+    "For-In Loop": {
+        "prefix": "forin",
+        "body": [
+            "for (var ${1:item} in ${2:collection}) {",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria um loop for-in"
+    },
+    "For-Of Loop": {
+        "prefix": "forof",
+        "body": [
+            "for (var ${1:item} of ${2:collection}) {",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria um loop for-of"
+    },
+    "If Statement": {
+        "prefix": "if",
+        "body": [
+            "if (${1:condition}) {",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria um if statement"
+    },
+    "If-Else Statement": {
+        "prefix": "ifelse",
+        "body": [
+            "if (${1:condition}) {",
+            "    ${2:// true case}",
+            "} else {",
+            "    ${3:// false case}",
+            "}"
+        ],
+        "description": "Cria um if-else statement"
+    },
+    "While Loop": {
+        "prefix": "while",
+        "body": [
+            "while (${1:condition}) {",
+            "    $0",
+            "}"
+        ],
+        "description": "Cria um while loop"
+    },
+    "List Declaration": {
+        "prefix": "list",
+        "body": [
+            "var ${1:listName}: List<${2:type}> = new List()"
+        ],
+        "description": "Declara uma lista tipada"
+    },
+    "Map Declaration": {
+        "prefix": "map",
+        "body": [
+            "var ${1:mapName}: Map<${2:keyType}, ${3:valueType}> = new Map()"
+        ],
+        "description": "Declara um mapa tipado"
+    },
+    "HashMap Declaration": {
+        "prefix": "hashmap",
+        "body": [
+            "var ${1:hashMapName}: HashMap<${2:keyType}, ${3:valueType}> = new HashMap()"
+        ],
+        "description": "Declara um HashMap tipado"
+    },
+    "Set Declaration": {
+        "prefix": "set",
+        "body": [
+            "var ${1:setName}: Set<${2:type}> = new Set()"
+        ],
+        "description": "Declara um Set tipado"
+    },
+    "Try-Catch": {
+        "prefix": "try",
+        "body": [
+            "try {",
+            "    ${1:// code that might throw}",
+            "} catch (${2:error}) {",
+            "    ${3:// handle error}",
+            "}"
+        ],
+        "description": "Cria um bloco try-catch"
+    },
+    "Lambda Function": {
+        "prefix": "lambda",
+        "body": [
+            "fn(${1:params}) { ${2:return ${3:expression}} }"
+        ],
+        "description": "Cria uma função lambda"
+    },
+    "Dataset Operation": {
+        "prefix": "dataset",
+        "body": [
+            "dataset ${1:operation} ${2:datasetName}"
+        ],
+        "description": "Operação com dataset"
+    },
+    "Model Operation": {
+        "prefix": "model",
+        "body": [
+            "model ${1:operation} ${2:modelName}"
+        ],
+        "description": "Operação com modelo"
+    },
+    "Import Statement": {
+        "prefix": "import",
+        "body": [
+            "import \"${1:modulePath}\""
+        ],
+        "description": "Importa um módulo"
+    },
+    "Print Statement": {
+        "prefix": "print",
+        "body": [
+            "print(${1:message})"
+        ],
+        "description": "Imprime uma mensagem"
+    },
+    "Await Expression": {
+        "prefix": "await",
+        "body": [
+            "await ${1:asyncExpression}"
+        ],
+        "description": "Aguarda uma expressão assíncrona"
+    }
+}

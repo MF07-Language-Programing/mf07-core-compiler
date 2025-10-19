@@ -1,0 +1,58 @@
+{
+    "name": "corp-lang",
+    "displayName": "CorpLang Advanced",
+    "description": "Suporte completo a CorpLang: syntax highlight avançado, tema customizado, IntelliSense e snippets corporativos",
+    "version": "2.7.0",
+    "icon": "images/icon.png",
+    "publisher": "mf07",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "corplang",
+                "aliases": [
+                    "CorpLang",
+                    "corplang"
+                ],
+                "extensions": [
+                    ".mp"
+                ],
+                "configuration": "./language-configuration.json",
+                "icon": {
+                    "light": "./images/corplang-file-icon.svg",
+                    "dark": "./images/corplang-file-icon.svg"
+                }
+            }
+        ],
+        "grammars": [
+            {
+                "language": "corplang",
+                "scopeName": "source.corplang",
+                "path": "./syntaxes/corp-lang.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "corplang",
+                "path": "./snippets/corp-lang.code-snippets.json"
+            }
+        ],
+        "themes": [
+            {
+                "label": "CorpLang Dark Theme",
+                "uiTheme": "vs-dark",
+                "path": "./themes/corplang-theme.json"
+            }
+        ]
+    },
+    "activationEvents": [
+        "onLanguage:corplang",
+        "onStartupFinished"
+    ],
+    "main": "./client/extension.js"
+}
