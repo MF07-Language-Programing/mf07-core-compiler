@@ -61,6 +61,9 @@ class CorpLang:
             tokens = lexer.tokenize()
             parser = Parser(tokens)
             ast = parser.parse()
+            print(
+                f"ast.statements({len(ast.statements)}): {getattr(ast.statements[0], "value")}"
+            )
 
             self.interpreter.interpret(ast)
         except Exception as e:

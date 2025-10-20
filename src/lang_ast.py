@@ -9,6 +9,7 @@ class ASTNode:
 @dataclass
 class Program(ASTNode):
     statements: List[ASTNode]
+    docstring: Optional[str] = None
 
 
 @dataclass
@@ -28,6 +29,7 @@ class FunctionDeclaration(ASTNode):
     is_async: bool = False
     param_types: Optional[Dict[str, Optional[str]]] = None
     param_defaults: Optional[Dict[str, Any]] = None
+    docstring: Optional[str] = None
     return_type: Optional[str] = None
     line: Optional[int] = None
     column: Optional[int] = None
@@ -39,6 +41,7 @@ class LambdaExpression(ASTNode):
     body: List[ASTNode]
     param_types: Optional[Dict[str, Optional[str]]] = None
     param_defaults: Optional[Dict[str, Any]] = None
+    docstring: Optional[str] = None
     return_type: Optional[str] = None
     line: Optional[int] = None
     column: Optional[int] = None
@@ -61,6 +64,7 @@ class ClassDeclaration(ASTNode):
     implements: Optional[List[str]] = None
     is_abstract: bool = False
     generic_params: Optional[List[str]] = None  # For generic classes like List<T>
+    docstring: Optional[str] = None
     line: Optional[int] = None
     column: Optional[int] = None
 
@@ -75,6 +79,7 @@ class MethodDeclaration(ASTNode):
     is_abstract: bool = False
     param_types: Optional[Dict[str, Optional[str]]] = None
     param_defaults: Optional[Dict[str, Any]] = None
+    docstring: Optional[str] = None
     return_type: Optional[str] = None
     line: Optional[int] = None
     column: Optional[int] = None

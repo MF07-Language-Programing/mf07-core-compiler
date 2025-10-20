@@ -595,6 +595,8 @@ class Interpreter:
         self.environment: Environment = self.globals
         self.datasets: Dict[str, Any] = {}
         self.models: Dict[str, Any] = {}
+        # registry for extracted documentation: qualified_name -> metadata
+        self.docs: Dict[str, Dict[str, Any]] = {}
         # directory of the file currently being interpreted (for relative imports)
         self.current_file_dir: str = os.getcwd()
         # path to the current file being interpreted (used for traceback snippets)
@@ -1799,6 +1801,19 @@ class Interpreter:
         elif isinstance(node, FunctionDeclaration):
             intent = CorpLangFunction(node, self.environment)
             self.environment.define(node.name, intent)
+            # register docstring and signature
+            try:
+                qname = node.name
+                self.docs[qname] = {
+                    "doc": getattr(node, "docstring", None),
+                    "params": node.params,
+                    "param_types": getattr(node, "param_types", None),
+                    "return_type": getattr(node, "return_type", None),
+                    "file": getattr(self, "current_file_path", None),
+                    "line": getattr(node, "line", None),
+                }
+            except Exception:
+                pass
 
         elif isinstance(node, ClassDeclaration):
             # collect fields and methods
@@ -1820,6 +1835,22 @@ class Interpreter:
             )
             # store class object in environment
             self.environment.define(node.name, class_obj)
+
+            # register class-level docs
+            try:
+                qname = node.name
+                self.docs[qname] = {
+                    "doc": getattr(node, "docstring", None),
+                    "type": "class",
+                    "file": getattr(self, "current_file_path", None),
+                    "line": getattr(node, "line", None),
+                    "methods": {
+                        mname: getattr(mnode, "docstring", None)
+                        for mname, mnode in methods.items()
+                    },
+                }
+            except Exception:
+                pass
 
             # If parent class exists in current environment, link it for inheritance lookup
             if node.extends:
