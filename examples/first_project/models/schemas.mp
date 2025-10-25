@@ -3,7 +3,7 @@ interface MessageBase {
     intent getContent(): string
 }
 
-class UserMessage implements Message {
+class UserMessage implements MessageBase {
     var role: string = "user"
     var content: string = ""
 
@@ -15,8 +15,33 @@ class UserMessage implements Message {
         return this.content
     }
 
+    intent getRole(): string {
+        return this.role
+    }
+
     intent toString(): string {
         return "UserMessage(role={this.role}, content={this.content})"
+    }
+}
+
+class AssistantMessage implements MessageBase {
+    var role: string = "assistant"
+    var content: string = ""
+
+    intent constructor(content: string) {
+        this.content = content
+    }
+
+    intent getContent(): string {
+        return this.content
+    }
+
+    intent getRole(): string {
+        return this.role
+    }
+
+    intent toString(): string {
+        return "AssistantMessage(role={this.role}, content={this.content})"
     }
 }
 

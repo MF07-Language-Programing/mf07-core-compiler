@@ -34,6 +34,7 @@ def run_demo_and_capture(path):
 def test_demo_outputs():
     demo = os.path.join("examples", "first_project", "models", "demo_class_system.mp")
     out = run_demo_and_capture(demo)
+    print(out)
     # Basic assertions that key demo lines appear
     assert "Demonstrating class system features" in out
     assert "Creating animals" in out

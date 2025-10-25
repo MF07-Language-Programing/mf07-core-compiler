@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "corplang"
+version = "0.1.0"
+description = "CorpLang — a small corporate programming language runtime"
+authors = ["MF07-Language-Programing <devs@example.com>"]
+readme = "README.md"
+packages = [ { include = "*" } ]
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+aiohttp = "^3.8.4"
+requests = "^2.31.0"
+json5 = "^0.9.5"
+jsonschema = "^4.18.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.4.0"
+mypy = "^0.991"
+flake8 = "^6.1.0"
+
+[tool.poetry.scripts]
+mf = "mf_cli:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

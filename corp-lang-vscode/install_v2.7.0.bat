@@ -3,7 +3,7 @@ cls
 echo.
 echo   ╔══════════════════════════════════════════════════╗
 echo   ║                                                  ║
-echo   ║          🟣 CorpLang Advanced v2.7.0 🟣          ║
+echo   ║          🟣 CorpLang Advanced v2.7.1 🟣          ║
 echo   ║                                                  ║
 echo   ║     Instalador Automático - VS Code Extension    ║
 echo   ║                                                  ║
@@ -23,13 +23,13 @@ if %errorlevel% neq 0 (
 echo  VS Code encontrado
 
 :: Verificar se arquivo .vsix existe
-if not exist "corp-lang-2.7.0.vsix" (
-    echo ❌ Arquivo corp-lang-2.7.0.vsix não encontrado!
+if not exist "corp-lang-2.7.1.vsix" (
+    echo ❌ Arquivo corp-lang-2.7.1.vsix não encontrado!
     echo 💡 Execute este script no diretório da extensão.
     pause
     exit /b 1
 )
-echo  Arquivo corp-lang-2.7.0.vsix encontrado
+echo  Arquivo corp-lang-2.7.1.vsix encontrado
 
 echo.
 echo 🚀 Iniciando instalação...
@@ -41,8 +41,8 @@ code --uninstall-extension mf07.corp-lang >nul 2>&1
 echo  Limpeza concluída
 
 :: Instalar nova versão
-echo 📦 Instalando CorpLang Advanced v2.7.0...
-code --install-extension corp-lang-2.7.0.vsix
+echo 📦 Instalando CorpLang Advanced v2.7.1...
+code --install-extension corp-lang-2.7.1.vsix
 
 if %errorlevel% equ 0 (
     echo.
@@ -50,7 +50,7 @@ if %errorlevel% equ 0 (
     echo   ║                                            ║
     echo   ║      INSTALAÇÃO CONCLUÍDA COM SUCESSO!    ║
     echo   ║                                            ║
-    echo   ║  🟣 CorpLang Advanced v2.7.0 Instalado     ║
+    echo   ║  🟣 CorpLang Advanced v2.7.1 Instalado     ║
     echo   ║                                            ║
     echo   ║  🎨 87+ Syntax Patterns                    ║
     echo   ║  🌈 Tema Roxo/Azul Exclusivo               ║

@@ -15,6 +15,7 @@ import difflib
 from typing import Any, Dict, List, Optional
 
 from src.mf_native import connections as mf_connections_native
+from src.mf_native import math_native as mf_math_native
 from src.mf_native import datetime as mf_datetime_native
 from src.mf_native import sys_hash as mf_hash_native
 from src.mf_native import fs as mf_fs_native, path as mf_path_native
@@ -436,6 +437,15 @@ class ClassObject:
         self.interfaces = implements or []
         self.is_abstract = is_abstract
 
+        for mname, mdecl in (methods or {}).items():
+            if getattr(mdecl, "is_static", False):
+                self.static_methods[mname] = mdecl
+            else:
+                self.instance_methods[mname] = mdecl
+        self.extends = extends
+        self.interfaces = implements or []
+        self.is_abstract = is_abstract
+
     def get_instance_method(self, name: str) -> Optional[MethodDeclaration]:
         cur = self
         while cur:
@@ -610,10 +620,18 @@ class Interpreter:
         # Initialize built-in functions and globals so they're available
         # to any threads or tasks started by this interpreter.
         self.define_builtins()
-        # NOTE: core modules are available via load_core_modules().
-        # We do NOT auto-load them here to avoid blocking startup when core
-        # contains constructs not yet supported by the parser. Callers can
-        # explicitly call `interpreter.load_core_modules()` when ready.
+        # Historically core modules (core/*.mp) were loaded automatically so
+        # that globals like `console` are available to scripts that expect
+        # the runtime's standard library. Tests and many examples instantiate
+        # Interpreter() directly and rely on those globals, so attempt to
+        # load core modules here. Failure should not abort initialization.
+        try:
+            # Use project root relative core directory; load_core_modules will
+            # warn (not raise) if the core directory is missing.
+            self.load_core_modules()
+        except Exception:
+            # Keep interpreter usable even if core loading fails.
+            pass
 
     def resolve_import_path(self, dotted_name: str) -> Optional[str]:
         """Resolve import dotted_name to a file path by trying:
@@ -1092,6 +1110,14 @@ class Interpreter:
             "parse": mf_datetime_native.parse,
         }
 
+        mf_random = {
+            "random": mf_math_native._random,
+            "randint": mf_math_native._randint,
+            "choice": mf_math_native._choice,
+            "shuffle": mf_math_native._shuffle,
+            "sample": mf_math_native._sample,
+        }
+
         mf_hash = {
             "md5": mf_hash_native.md5,
             "sha1": mf_hash_native.sha1,
@@ -1255,6 +1281,7 @@ class Interpreter:
             "path": mf_path,
             "datetime": mf_datetime,
             "hash": mf_hash,
+            "random": mf_random,
         }
         self.globals.define("mf", mf_namespace)
 
@@ -1265,6 +1292,7 @@ class Interpreter:
         self.globals.define("mf.strict.utils", mf_strict_utils)
 
         # keep dotted names for backwards compatibility
+        self.globals.define("mf.random", mf_random)
         self.globals.define("mf.collections", mf_collections)
         self.globals.define("mf.json", mf_json)
         self.globals.define("mf.objects", mf_objects)
@@ -1279,6 +1307,23 @@ class Interpreter:
         self.globals.define("List", NativeList)
         self.globals.define("Map", NativeMap)
         self.globals.define("Set", NativeSet)
+
+        # parser Primitives
+        self.globals.define("parseInt", lambda x: int(x))
+        self.globals.define("parseFloat", lambda x: float(x))
+        self.globals.define("parseBool", lambda x: bool(x))
+        self.globals.define("isInteger", lambda x: isinstance(x, int))
+        self.globals.define("isNaN", lambda x: isinstance(x, float) and x != x)
+        self.globals.define(
+            "isFinite",
+            lambda x: isinstance(x, (int, float))
+            and not (
+                isinstance(x, float)
+                and (x != x or x == float("inf") or x == float("-inf"))
+            ),
+        )
+        self.globals.define("NaN", float("nan"))
+        self.globals.define("Infinity", float("inf"))
 
         # JSON/Object utilities at top-level and under mf namespace
         self.globals.define("JSON.parse", mf_json_parse)
@@ -1768,6 +1813,11 @@ class Interpreter:
                         pass
                     raise
                 # other exceptions: log and continue
+                # self.execute(statement)
+
+                # print(f"Executing id {len(program.statements)} statement: {statement}")
+                # print("=-" * 90)
+                # print(program.statements)
                 error(f"Erro ao executar statement: {e}", component="interpreter")
                 # traceback.print_exc()
 
@@ -1856,11 +1906,63 @@ class Interpreter:
             if node.extends:
                 try:
                     parent = self.environment.get(node.extends)
+                    # If parent is an InterfaceDeclaration AST, forbid extending an interface
+                    from src.lang_ast import InterfaceDeclaration as _InterfaceAST
+
+                    if isinstance(parent, _InterfaceAST):
+                        raise RuntimeTypeError(
+                            f"Class '{node.name}' cannot extend interface '{node.extends}': use 'implements' instead"
+                        )
+
                     if isinstance(parent, ClassObject):
                         class_obj.parent = parent
+                except RuntimeTypeError:
+                    raise
                 except Exception:
                     # parent may be defined later; leave parent as None
                     pass
+
+            # Enforce interface implementation for declared interfaces
+            if node.implements:
+                for iface_name in node.implements:
+                    try:
+                        iface = self.environment.get(iface_name)
+                    except Exception:
+                        raise RuntimeTypeError(
+                            f"Class '{node.name}' implements unknown interface '{iface_name}'"
+                        )
+
+                    from src.lang_ast import InterfaceDeclaration as _InterfaceAST
+
+                    if not isinstance(iface, _InterfaceAST):
+                        raise RuntimeTypeError(
+                            f"'{iface_name}' is not an interface and cannot be implemented by '{node.name}'"
+                        )
+
+                    # Ensure each interface method is implemented by the class (unless class is abstract)
+                    for imethod in iface.methods:
+                        if imethod.name not in methods:
+                            if not node.is_abstract:
+                                raise RuntimeTypeError(
+                                    f"Class '{node.name}' must implement method '{imethod.name}' from interface '{iface_name}'"
+                                )
+                        else:
+                            mdecl = methods[imethod.name]
+                            if (
+                                getattr(mdecl, "is_abstract", False)
+                                and not node.is_abstract
+                            ):
+                                raise RuntimeTypeError(
+                                    f"Class '{node.name}' declares method '{mdecl.name}' as abstract but must implement interface '{iface_name}'"
+                                )
+
+            # If class is concrete, ensure it has no abstract methods
+            if not node.is_abstract:
+                for mname, mdecl in methods.items():
+                    if getattr(mdecl, "is_abstract", False):
+                        raise RuntimeTypeError(
+                            f"Non-abstract class '{node.name}' cannot contain abstract method '{mname}'"
+                        )
 
             # Evaluate static field defaults now and store their values
             for fname, fdecl in class_obj.static_fields.items():
@@ -1872,6 +1974,77 @@ class Interpreter:
                 else:
                     val = None
                 class_obj.static_field_values[fname] = val
+
+            # --- Signature and field-type compatibility checks ---
+            # Helper to compare method signatures (params and return type)
+            def _method_signature_matches(
+                base: MethodDeclaration, impl: MethodDeclaration
+            ) -> bool:
+                base_params = getattr(base, "params", []) or []
+                impl_params = getattr(impl, "params", []) or []
+                if len(base_params) != len(impl_params):
+                    return False
+                base_ptypes = getattr(base, "param_types", {}) or {}
+                impl_ptypes = getattr(impl, "param_types", {}) or {}
+                for bname, iname in zip(base_params, impl_params):
+                    btype = base_ptypes.get(bname)
+                    itype = impl_ptypes.get(iname)
+                    # require exact match if base type specified
+                    if btype is not None and itype != btype:
+                        return False
+                bret = getattr(base, "return_type", None)
+                iret = getattr(impl, "return_type", None)
+                if bret is not None and iret != bret:
+                    return False
+                return True
+
+            # Enforce signature compatibility with implemented interfaces
+            if node.implements:
+                for iface_name in node.implements:
+                    try:
+                        iface = self.environment.get(iface_name)
+                    except Exception:
+                        continue
+                    from src.lang_ast import InterfaceDeclaration as _InterfaceAST
+
+                    if not isinstance(iface, _InterfaceAST):
+                        continue
+                    for imethod in iface.methods:
+                        if imethod.name in methods:
+                            impl = methods[imethod.name]
+                            if not _method_signature_matches(imethod, impl):
+                                raise RuntimeTypeError(
+                                    f"Method '{impl.name}' in class '{node.name}' does not match signature of interface '{iface_name}'. Expected params {imethod.params} types {getattr(imethod,'param_types',None)} and return {getattr(imethod,'return_type',None)}"
+                                )
+
+            # Enforce overrides compatibility with parent class (if resolved)
+            if class_obj.parent is not None:
+                parent = class_obj.parent
+                # methods
+                for mname, mdecl in class_obj.instance_methods.items():
+                    # constructors are not considered overrides of parent constructors
+                    if mname == "constructor":
+                        continue
+                    pdecl = parent.get_instance_method(mname)
+                    if pdecl is not None:
+                        if not _method_signature_matches(pdecl, mdecl):
+                            raise RuntimeTypeError(
+                                f"Method '{mname}' in class '{node.name}' does not match signature of overridden method in parent '{parent.name}'"
+                            )
+                # fields: ensure re-declared field types match parent
+                for fname, fdecl in class_obj.instance_fields.items():
+                    p_fdecl = parent.instance_fields.get(fname)
+                    if p_fdecl is not None:
+                        p_type = getattr(p_fdecl, "type_annotation", None)
+                        c_type = getattr(fdecl, "type_annotation", None)
+                        if (
+                            p_type is not None
+                            and c_type is not None
+                            and p_type != c_type
+                        ):
+                            raise RuntimeTypeError(
+                                f"Field '{fname}' in class '{node.name}' has type '{c_type}' which does not match parent field type '{p_type}'"
+                            )
 
         elif isinstance(node, InterfaceDeclaration):
             # At runtime interfaces have no direct behavior; register interface AST for introspection

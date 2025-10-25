@@ -1,11 +1,17 @@
 
 var logger = new Logger(LogLevel.DEBUG, "SegmentTest")
+var useCallback = fn(args: list<string>){
+	for (var arg in args) {
+		logger.info("Olá {arg}! {Math.pi()}")
+	}
+}
+
 
 class SegmentTest {
 	private var string name: Optional[string]
 	private var int waitingTime: Optional[int]
 
-	intent constructor(name: Optional[string], waitingTime: Optional[int]) {
+	intent constructor(name: Optional[string] = "test_segment_or", waitingTime: Optional[int] = 1000) {
 		if (name == null) {
 			this.name = "test_segment"
 		} else {
@@ -23,66 +29,66 @@ class SegmentTest {
 
 		var root = Path.join(Path.cwd(), "tests", "tmp_fs", null, null)
 		var workdir = new Directory(root)
-		logger.debug("Diretório temporário:", root)
+		logger.debug("Diretório temporário: {root}")
 
 		if (not workdir.exists()) {
 			var created = workdir.ensure()
-			logger.debug("Criado diretório temporário:", created)
+			logger.debug("Criado diretório temporário: {created}")
 		}
 
 		var filePath = Path.join(root, "amostra.txt", null, null, null)
 		var file = new File(filePath)
-		logger.debug("Arquivo alvo:", filePath)
+		logger.debug("Arquivo alvo: {filePath}")
 
 		var wrote = file.writeText("Linha inicial", null)
-		logger.debug("Escreveu texto inicial:", wrote)
+		logger.debug("Escreveu texto inicial: {wrote}")
 
 		var appended = file.appendText("\nSegunda linha", null)
-		logger.debug("Append realizado:", appended)
+		logger.debug("Append realizado: {appended}")
 
 		var content = file.readText(null)
-		logger.debug("Conteúdo atual:\n" + content)
+		logger.debug("Conteúdo atual:\n{content}")
 
 		var info = file.info()
 		if (info != null) {
-			logger.debug("Tamanho do arquivo:", info.size)
-			logger.debug("É arquivo?", info.isFile())
-			logger.debug("Última modificação:", info.modified)
+			logger.debug("Tamanho do arquivo: {info.size}")
+			logger.debug("É arquivo? {info.isFile()}")
+			logger.debug("Última modificação: {info.modified}")
 		}
 
 		var copyPath = Path.join(root, "copia.txt", null, null, null)
 		var copied = file.copyTo(copyPath, true)
-		logger.debug("Cópia criada:", copied)
+		logger.debug("Cópia criada: {copied}")
 
 		var movedPath = Path.join(root, "movido.txt", null, null, null)
 		var moved = file.moveTo(movedPath, true)
-		logger.debug("Movido com sucesso:", moved)
+		logger.debug("Movido com sucesso: {moved}")
 
 		var listing = workdir.list(false)
-		logger.debug("Itens no diretório:", listing.size())
+		logger.debug("Itens no diretório: {listing.size()}")
 
 		var i = 0
 		while (i < listing.size()) {
 			var entry = listing.get(i)
-			logger.debug(" - ", entry.name, " (", entry.type, ")")
+			logger.debug(" - {entry.name} ({entry.type})")
 			i = i + 1
 		}
 
 		var globbed = FileSystem.glob(root, "*.txt")
-		logger.debug("Resultado glob:", globbed.size())
+		logger.debug("Resultado glob: {globbed.size()}")
 
 		var walked = FileSystem.walk(root)
-		logger.debug("Frames do walk:", walked.size())
+		logger.debug("Frames do walk: {walked.size()}")
 		waitSeconds(5)  # Espera para garantir que o walk seja concluído
 
 		var copyRemoved = FileSystem.remove(copyPath, false)
-		logger.debug("Cópia removida:", copyRemoved)
+		logger.debug("Cópia removida: {copyRemoved}")
 
 		var movedRemoved = FileSystem.remove(movedPath, false)
-		logger.debug("Arquivo movido removido:", movedRemoved)
+		logger.debug("Arquivo movido removido: {movedRemoved}")
 
 		var cleaned = workdir.remove(true)
-		logger.debug("Diretório temporário limpo:", cleaned)
+		logger.debug("Diretório temporário limpo: {cleaned}")
 
 		logger.debug("=== FIM DO TESTE FileSystem ===")
 	}
@@ -179,9 +185,9 @@ class SegmentTest {
 	intent test_try_catch(){
 		try {
 			var x = 1 / 4
-			logger.debug("Resultado da divisão({type(x)}):", x)
+			logger.debug("Resultado da divisão({type(x)}): {x}")
 		} catch (error) {
-			logger.debug("Capture message: ${error.message}")
+			logger.debug("Capture message: {error.message}")
 			logger.debug("Cause by: {error.cause}")
 			logger.debug("Object Type: error={type(error)} | trace={type(error.stackTrace)}")
 		}
@@ -193,7 +199,7 @@ class SegmentTest {
 		import examples.first_project.models.demo_class_system
 	}
 
-	intent run() {
+	async intent run() {
 		logger.warn("Running segment: {Optional.unwrap(this.name)}")
 		this.test_filesystem()
 		waitSeconds(1) # Simulating work
@@ -213,15 +219,73 @@ class SegmentTest {
 	}
 }
 
+class Base {
+    var x: int = 0
+    intent constructor(x: int) {
+        this.x = x
+    }
+    intent getX() { return this.x }
+}
+
+class Derived extends Base {
+    var y: int = 0
+    intent constructor(x: int, y: int) {
+        super(x)
+        this.y = y
+    }
+    intent getY() { return this.y }
+    intent getValue() { return this.getX() + this.getY() }
+}
+
+intent test() {
+ 	var rows: int = 3
+    var cols: int = 4
+    var matrix = new List()
+
+    print(" Criando matriz com FOR TRADICIONAL:")
+    for (var i: int = 0; i < rows; i = i + 1) {
+        # var row = new List()
+        
+        # for (var j: int = 0; j < cols; j = j + 1) {
+        #     var obj = new Derived((i + 1) * 10, (j + 1) * 5)
+        #     row.append(obj)
+        # }
+        
+        # matrix.append(row)
+        print("  ✓ Linha ", (i + 1).toString(), " criada")
+    }
+}
+
+intent debug(value: CorpLangFunction){
+	var msg = value()
+	print("DEBUG({type(value)}):", Object.keys(value))
+	print("DEBUG RESULT:", msg)
+}
+
 async intent main() {
-	var segment = new SegmentTest(null, null)
-	print("Object={type(segment)}")
-	try {
-		# segment.run()
-		return 0
-	} catch (ex) {
-		return -1
+	var segment = new SegmentTest()
+	var rows: int = 3
+	try{
+		for (var i: int = 0; i < 100; i = i + 1) {
+			var test: Union[int, float] = Math.min(0, 100)
+			if (test == 100) {
+				throw new RuntimeException("Teste de erro lançado na iteração {i}-{test}, valor máximo atingido.")
+			}
+			var result = test % 2
+			# print("Index {i} value={test.toString()}")
+			if (result == 0) {
+				print("Item {i} - E Par. calc={result} | random_value={test}")
+			}
+		}
+	} catch (error) {
+		logger.error("Error occurred: {error.message}")
 	}
 }
 
-await main()
+# await main():
+useCallback(["Alice", "Bob", "Charlie"])
+# debug(fn() {
+# 	print("Executing debug function...")
+# 	return "Hello from debug!"
+# })
+# debug("test string")

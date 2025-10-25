@@ -28,3 +28,8 @@ Contribuições
 -------------
 
 Contribuições são bem-vindas. Para gerar automaticamente o índice completo com todas as funções/métodos e exemplos executáveis, execute a ferramenta de documentação (a ser fornecida) ou solicite que eu gere as seções automaticamente no repositório.
+
+Instalação e builds
+--------------------
+
+Instruções de empacotamento e geração de binários estão em `docs/installer.md`.
