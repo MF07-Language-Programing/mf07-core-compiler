@@ -65,10 +65,35 @@ class DateTime implements Date {
     }
 
     intent toString(): string {
-        return "[__class__={this.__class__}, year={this._year}, month={this._month}, day={this._day}, hour={this._hour}, minute={this._minute}, second={this._second}, microsecond={this._microsecond}, tzinfo={this._tzinfo}]"
+        # Prefer ISO-like representation
+        var dt = mf.datetime.datetime(this._year, this._month, this._day, this._hour, this._minute, this._second, this._microsecond)
+        try {
+            return dt.isoformat()
+        } catch (e) {
+            return "[__class__={this.__class__}, year={this._year}, month={this._month}, day={this._day}]"
+        }
     }
 
     intent toClass(): string {
         return this.__class__
+    }
+
+    # Return a Date object representing today in local timezone
+    intent today(): Date {
+        # delegate to static now() using no timezone
+        return DateTime.now(null)
+    }
+
+    # Create DateTime from unix timestamp
+    static intent from_timestamp(ts: float, _tz: Optional[string]): DateTime {
+        var dt = mf.datetime.from_timestamp(ts)
+        var _fold: int = 0
+        var __bytes__ = mf.hash.base64_decode(dt.isoformat().encode("utf-8"))
+        var _hashcode: string = mf.hash.apply_hash_algorithm("sha256", __bytes__)
+        var tzinfo: Optional[string] = null
+        if (dt.tzinfo != null) {
+            tzinfo = dt.tzinfo.tzname(None)
+        }
+        return new DateTime(_fold, _hashcode, tzinfo, dt.microsecond, dt.second, dt.minute, dt.hour, dt.day, dt.month, dt.year, DateTime.__default_class__)
     }
 }

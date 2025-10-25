@@ -1,7 +1,7 @@
 const cp = require('child_process');
 const path = require('path');
 
-intent startServer(context) {
+function startServer(context) {
     // Try to use workspace virtualenv python if available, else default 'python'
     const workspaceFolders = (vscode.workspace && vscode.workspace.workspaceFolders) || [];
     let python = 'python';

@@ -1,6 +1,27 @@
 # Basic Math operations
 
 class Math {
+    static var PI_VALUE: float = 3.141592653589793
+
+    static intent min(min: int, max: Optional[int] = 100): Union[int, float] {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+
+    static intent random(eval: Optional[Union[int, float]] = 1): Union[int, float] {
+        return mf.random.random() * eval
+    }
+
+    static intent floor(value: float): int {
+        return parseInt(value)
+    }
+
+    static intent pi(p: Optional[Union[int, float]] = null, d: Optional[Union[int, float]] = null): float {
+        if (p != null and d != null) {
+            return 2 * Math.PI_VALUE * p * d
+        }
+        return Math.PI_VALUE
+    }
+
     static intent add(a: int, b: int): int {
         return a + b
     }

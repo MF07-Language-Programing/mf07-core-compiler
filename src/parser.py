@@ -90,7 +90,17 @@ class Parser:
             stmt = self.parse_statement()
             if stmt:
                 statements.append(stmt)
-        return Program(statements)
+
+        # If the first top-level statement is a string literal, treat it as a module docstring
+        module_doc = None
+        if (
+            statements
+            and isinstance(statements[0], Literal)
+            and isinstance(statements[0].value, str)
+        ):
+            module_doc = statements.pop(0).value
+
+        return Program(statements, docstring=module_doc)
 
     def parse_statement(self) -> Optional[Any]:
         if not self.current_token:
@@ -322,6 +332,11 @@ class Parser:
 
         self.expect(TokenType.RBRACE)
 
+        # If the first statement in the body is a string literal, treat it as a docstring
+        docstring_val = None
+        if body and isinstance(body[0], Literal) and isinstance(body[0].value, str):
+            docstring_val = body.pop(0).value
+
         fd = FunctionDeclaration(
             name,
             params,
@@ -333,6 +348,7 @@ class Parser:
         fd.param_types = param_types
         fd.param_defaults = param_defaults if param_defaults else None
         fd.return_type = return_type
+        fd.docstring = docstring_val
         return fd
 
     def parse_import_declaration(self) -> ImportDeclaration:
@@ -542,6 +558,15 @@ class Parser:
                         body_stmts.append(stmt)
                 self.expect(TokenType.RBRACE)
 
+                # If the first statement in the method body is a string, treat it as docstring
+                method_doc = None
+                if (
+                    body_stmts
+                    and isinstance(body_stmts[0], Literal)
+                    and isinstance(body_stmts[0].value, str)
+                ):
+                    method_doc = body_stmts.pop(0).value
+
                 method_node = MethodDeclaration(
                     mname,
                     params,
@@ -555,6 +580,7 @@ class Parser:
                 method_node.param_types = param_types
                 method_node.param_defaults = param_defaults if param_defaults else None
                 method_node.return_type = return_type
+                method_node.docstring = method_doc
                 body.append(method_node)
             else:
                 # field: accept either `var name: Type = expr;` or `name: Type = expr;`
@@ -1292,6 +1318,11 @@ class Parser:
                     body.append(stmt)
             self.expect(TokenType.RBRACE)
 
+            # If first statement in lambda body is a string literal, treat as docstring
+            lambda_doc = None
+            if body and isinstance(body[0], Literal) and isinstance(body[0].value, str):
+                lambda_doc = body.pop(0).value
+
             node = LambdaExpression(
                 params,
                 body,
@@ -1301,6 +1332,7 @@ class Parser:
                 line=token.line,
                 column=token.column,
             )
+            node.docstring = lambda_doc
 
         # Identifier (may be intent call)
         elif self.current_token.type == TokenType.IDENTIFIER:

@@ -1,0 +1,17 @@
+name: corplang
+arch: amd64
+platform: linux
+version: 0.1.0
+section: utils
+priority: extra
+maintainer: MF07 <devs@example.com>
+description: |
+  CorpLang — a small corporate programming language runtime
+
+files:
+  dist/mf: /usr/local/bin/mf
+
+scripts:
+  postinstall: |
+    #!/bin/sh
+    chmod +x /usr/local/bin/mf

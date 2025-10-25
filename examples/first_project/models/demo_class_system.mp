@@ -63,16 +63,16 @@ intent demoList() {
     console.debug("--- Demonstrating polymorphism and lists ---")
     var i = 0
     while (i < len(animals)) {
-        console.debug("----"*5,i ,"----"*5)
+        print("----"*5,i ,"----"*5)
         var a = animals[i]
         a.speak()
         console.debug("Representation={a.__repr__()}")
         i = i + 1
-        console.debug("[","===="*5,i ,"===="*5, "]")
+        print("[","===="*5,i ,"===="*5, "]")
     }
 
-    console.debug("Dog secret via method:", d.getSecret())
-    console.debug("Dog secret via field:", d.secret)
+    console.debug("Dog secret via method: {d.getSecret()}")
+    console.debug("Dog secret via field: {d.secret}")
 }
 
 demoList()
@@ -82,7 +82,7 @@ class Base {
     var x: int = 0
     intent constructor(x: int) {
         this.x = x
-        console.debug("Base constructor called with x=", x)
+        console.debug("Base constructor called with x= {x}")
     }
     intent getX() { return this.x }
 }
@@ -92,11 +92,11 @@ class Derived extends Base {
     intent constructor(x: int, y: int) {
         super(x)
         this.y = y
-        console.debug("Derived constructor called with y=", y)
+        console.debug("Derived constructor called with y= {y}")
     }
     intent getY() { return this.y }
     intent showBoth() {
-        console.debug("x=", this.getX(), "y=", this.getY())
+        console.debug("[Derived] x= {this.getX()} y= {this.getY()}")
     }
 }
 

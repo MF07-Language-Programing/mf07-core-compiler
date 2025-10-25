@@ -21,7 +21,7 @@ class Derived extends Base {
 }
 
 intent exemplo_completo_for_loops() {
-    print("🎯 === EXEMPLO COMPLETO: TODOS OS TIPOS DE FOR LOOPS ===")
+    print(" === EXEMPLO COMPLETO: TODOS OS TIPOS DE FOR LOOPS ===")
     print()
 
     # Criar matriz com for tradicional
@@ -29,7 +29,7 @@ intent exemplo_completo_for_loops() {
     var cols: int = 4
     var matrix = new List()
 
-    print("📦 Criando matriz com FOR TRADICIONAL:")
+    print(" Criando matriz com FOR TRADICIONAL:")
     for (var i: int = 0; i < rows; i = i + 1) {
         var row = new List()
         
@@ -44,7 +44,7 @@ intent exemplo_completo_for_loops() {
     print()
 
     # Imprimir matriz com for-in
-    print("🔍 Iterando matriz com FOR-IN:")
+    print(" Iterando matriz com FOR-IN:")
     var rowIndex: int = 0
     for (var row in matrix) {
         print("  Linha ", (rowIndex + 1).toString(), ":")
@@ -61,7 +61,7 @@ intent exemplo_completo_for_loops() {
     print()
 
     # Demonstrar for-of com lista de valores
-    print("⚡ Usando FOR-OF para somar valores:")
+    print(" Usando FOR-OF para somar valores:")
     var firstRow = matrix.get(0)
     var sum: int = 0
     
@@ -70,7 +70,7 @@ intent exemplo_completo_for_loops() {
         sum = sum + value
         print("  + ", value.toString(), " (soma parcial: ", sum.toString(), ")")
     }
-    print("  🏆 Soma total da primeira linha: ", sum.toString())
+    print("   Soma total da primeira linha: ", sum.toString())
     print()
 
     # Comparação de performance com diferentes loops

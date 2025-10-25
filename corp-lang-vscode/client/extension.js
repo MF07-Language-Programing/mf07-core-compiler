@@ -2,7 +2,7 @@ const vscode = require('vscode');
 const cp = require('child_process');
 const path = require('path');
 
-intent activate(context) {
+function activate(context) {
     console.log('Activating CorpLang extension');
 
     // Try to find python in workspace venv
@@ -22,7 +22,7 @@ intent activate(context) {
     context.subscriptions.push({ dispose: () => child.kill() });
 }
 
-intent deactivate() {
+function deactivate() {
     // Nothing to cleanup; child process will be killed via subscription
 }
 
